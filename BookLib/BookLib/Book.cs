@@ -3,7 +3,7 @@
     public class Book
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public int Price { get; set; }
 
         private void ValidateTitle()
@@ -23,7 +23,7 @@
             {
                 throw new ArgumentOutOfRangeException("Price must be greater than 0");
             }
-            if(Price > 1201) 
+            if(Price > 1200) 
             {
                 throw new ArgumentOutOfRangeException("Price must be less than or equal 1200");
             }
