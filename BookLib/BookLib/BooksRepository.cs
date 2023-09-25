@@ -21,11 +21,11 @@ namespace BookLib
             List<Book> bookList = new List<Book>(books);
             if(priceLessThan != null)
             {
-                bookList.Where(b => b.Price < priceLessThan);
+                bookList = bookList.Where(b => b.Price < priceLessThan).ToList();
             }
             if(priceGreaterThan != null)
             {
-                bookList.Where(b => b.Price > priceGreaterThan);
+                bookList = bookList.Where(b => b.Price > priceGreaterThan).ToList();
             }
             if(sortBy != null)
             {
@@ -33,17 +33,17 @@ namespace BookLib
                 {
                     case "title":
                     case "title_asc":
-                        bookList.OrderBy(b => b.Title);
+                        bookList = bookList.OrderBy(b => b.Title).ToList();
                         break;
                     case "title_desc":
-                        bookList.OrderByDescending(b => b.Title);
+                        bookList = bookList.OrderByDescending(b => b.Title).ToList();
                         break;
                     case "price":
                     case "price_asc":
-                        bookList.OrderBy(b => b.Price);
+                        bookList = bookList.OrderBy(b => b.Price).ToList();
                         break;
                     case "price_desc":
-                        bookList.OrderByDescending(b => b.Price);
+                        bookList = bookList.OrderByDescending(b => b.Price).ToList();
                         break;
                     default:
                         break;
@@ -53,13 +53,13 @@ namespace BookLib
         }
         public Book? GetById(int id)
         {
-            return books.FirstOrDefault(book =>  book.Id == id);
+            return books.FirstOrDefault(book => book.Id == id);
         }
         public Book Add(Book book)
         {
             book.Validate();
             int currentMaxId = books.Select(b => b.Id).Max();
-            book.Id = currentMaxId++;
+            book.Id = currentMaxId+1;
             books.Add(book);
             return book;
         }

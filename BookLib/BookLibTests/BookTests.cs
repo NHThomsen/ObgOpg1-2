@@ -51,5 +51,101 @@ namespace BookLib.Tests
 
             Assert.AreEqual(1,book.Id);
         }
+        [TestMethod()]
+        public void ValidateGetById()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(1, booksRepository.GetById(1).Id);
+        }
+        [TestMethod()]
+        public void ValidateGetByIdNull()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.IsNull(booksRepository.GetById(10000));
+        }
+        [TestMethod()]
+        public void ValidateAddBook()
+        {
+            Book book = new Book();
+            book.Title = "new title";
+            book.Price = 100;
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(6, booksRepository.Add(book).Id);
+        }
+        [TestMethod()]
+        public void ValidateDeletebook()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(5, booksRepository.Delete(5).Id);
+        }
+        [TestMethod()]
+        public void ValidateDeleteBookNull()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.IsNull(booksRepository.Delete(10000));
+        }
+        [TestMethod()]
+        public void ValidateUpdateBook()
+        {
+            Book book = new Book();
+            book.Title = "Updated title";
+            book.Price = 1000;
+            BooksRepository booksRepository = new BooksRepository();
+            Book? updatedBook = booksRepository.Update(2, book);
+            Assert.AreEqual(2, updatedBook.Id);
+            Assert.AreEqual("Updated title", updatedBook.Title);
+            Assert.AreEqual(1000, updatedBook.Price);
+        }
+        [TestMethod()]
+        public void ValidateUpdateBookNull() 
+        {
+            Book book = new Book();
+            book.Title = "Updated title";
+            book.Price = 1000;
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.IsNull(booksRepository.Update(1000,book));
+        }
+        [TestMethod()]
+        public void ValidateGetPriceLessThan()
+        {
+            BooksRepository booksRepository= new BooksRepository();
+            Assert.AreEqual(1, booksRepository.Get(120).Count());
+        }
+        [TestMethod()]
+        public void ValidateGetPriceGreaterThan()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(2, booksRepository.Get(null,200).Count());
+        }
+        [TestMethod()]
+        public void ValidateGetSortByTitle()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(1, booksRepository.Get(null, null, "title").FirstOrDefault().Id);
+        }
+        [TestMethod()]
+        public void ValidateGetSortByTitleDesc()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(2, booksRepository.Get(null, null, "title_desc").FirstOrDefault().Id);
+        }
+        [TestMethod()]
+        public void ValidateGetSortByPrice()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(3, booksRepository.Get(null, null, "price").FirstOrDefault().Id);
+        }
+        [TestMethod()]
+        public void ValidateGetSortByPriceDesc()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(4, booksRepository.Get(null, null, "price_desc").FirstOrDefault().Id);
+        }
+        [TestMethod()]
+        public void ValidateGetSortByDefault()
+        {
+            BooksRepository booksRepository = new BooksRepository();
+            Assert.AreEqual(1, booksRepository.Get(null, null, "lorem ipsum").FirstOrDefault().Id);
+        }
     }
 }
